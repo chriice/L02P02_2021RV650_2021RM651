@@ -4,32 +4,35 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<div class="container">
+    <ul class="progressbar">
+        <li class="active">Autores</li>
+        <li>Libros</li>
+        <li>Comentarios existentes</li>
+        <li>Nuevo comentario</li>
+    </ul>
+    <br />
+</div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Autor)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Autor)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="container mt-4">
+    <table class="table table-bordered border-gray">
+        <thead class="bg-light">
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Autor)</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Autor)</td>
+                    <td class="text-center">
+                        <a asp-action="LibrosAutor" asp-route-id="@item.Id" class="btn btn-success">Seleccionar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>

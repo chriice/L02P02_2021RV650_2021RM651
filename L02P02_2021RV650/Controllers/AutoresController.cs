@@ -80,73 +80,51 @@ namespace L02P02_2021RV650.Controllers
             return View(autore);
         }
 
-        // POST: Autores/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Autor")] Autore autore)
+        [HttpGet]
+        public async Task<IActionResult> LibrosAutor(int id)
         {
-            if (id != autore.Id)
+            var autor = await _context.Autores.FindAsync(id);
+            if (autor == null)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(autore);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!AutoreExists(autore.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(autore);
+            var librosDelAutor = await _context.Libros
+                .Where(l => l.IdAutor == autor.Id)
+                .ToListAsync();
+
+            ViewBag.NombreAutor = autor.Autor;
+
+            return View("LibrosAutor", librosDelAutor);
         }
 
-        // GET: Autores/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        [HttpGet]
+        public async Task<IActionResult> ComentariosLibro(int id)
         {
-            if (id == null)
+            var libro = await _context.Libros.FindAsync(id);
+            if (libro == null)
             {
                 return NotFound();
             }
 
-            var autore = await _context.Autores
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (autore == null)
+            var autorDelLibro = await _context.Autores.FindAsync(libro.IdAutor);
+            if (autorDelLibro == null)
             {
                 return NotFound();
             }
 
-            return View(autore);
+            var comentariosDelLibro = await _context.ComentariosLibros
+                .Where(c => c.IdLibro == id)
+                .ToListAsync();
+
+            ViewBag.NombreLibro = libro.Nombre;
+            ViewBag.IdLibro = libro.Id;
+            ViewBag.NombreAutor = autorDelLibro.Autor;
+
+            return View("ComentariosLibro", comentariosDelLibro);
         }
 
-        // POST: Autores/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var autore = await _context.Autores.FindAsync(id);
-            if (autore != null)
-            {
-                _context.Autores.Remove(autore);
-            }
-
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+       
 
         private bool AutoreExists(int id)
         {

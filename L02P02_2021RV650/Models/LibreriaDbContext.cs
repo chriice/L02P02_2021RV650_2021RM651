@@ -31,19 +31,17 @@ public partial class LibreriaDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=LAPTOP-H6VGDNU2; Database=libreriaDb; Trusted_Connection=True; TrustServerCertificate=true;");
+        => optionsBuilder.UseSqlServer("Server=DESKTOP-5SK7M5O; Database=libreriaDb; Trusted_Connection=True; TrustServerCertificate=true;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Autore>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__autores__3213E83F31F89F5F");
+            entity.HasKey(e => e.Id).HasName("PK__autores__3213E83FA70FDE2C");
 
             entity.ToTable("autores");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Autor)
                 .HasMaxLength(200)
                 .IsUnicode(false)
@@ -52,13 +50,11 @@ public partial class LibreriaDbContext : DbContext
 
         modelBuilder.Entity<Categoria>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__categori__3213E83F288CAE23");
+            entity.HasKey(e => e.Id).HasName("PK__categori__3213E83F6C77858A");
 
             entity.ToTable("categorias");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Categoria1)
                 .HasMaxLength(200)
                 .IsUnicode(false)
@@ -67,13 +63,11 @@ public partial class LibreriaDbContext : DbContext
 
         modelBuilder.Entity<Cliente>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__clientes__3213E83F61680E25");
+            entity.HasKey(e => e.Id).HasName("PK__clientes__3213E83F5D85C068");
 
             entity.ToTable("clientes");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Apellido)
                 .HasMaxLength(255)
                 .HasColumnName("apellido");
@@ -93,13 +87,11 @@ public partial class LibreriaDbContext : DbContext
 
         modelBuilder.Entity<ComentariosLibro>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__comentar__3213E83F882A3936");
+            entity.HasKey(e => e.Id).HasName("PK__comentar__3213E83F456F30F5");
 
             entity.ToTable("comentarios_libros");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Comentarios)
                 .IsUnicode(false)
                 .HasColumnName("comentarios");
@@ -114,18 +106,16 @@ public partial class LibreriaDbContext : DbContext
 
             entity.HasOne(d => d.IdLibroNavigation).WithMany(p => p.ComentariosLibros)
                 .HasForeignKey(d => d.IdLibro)
-                .HasConstraintName("FK__comentari__id_li__46E78A0C");
+                .HasConstraintName("FK__comentari__id_li__47DBAE45");
         });
 
         modelBuilder.Entity<Libro>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__libros__3213E83FDCDDA77A");
+            entity.HasKey(e => e.Id).HasName("PK__libros__3213E83FC463248E");
 
             entity.ToTable("libros");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Descripcion)
                 .HasMaxLength(255)
                 .HasColumnName("descripcion");
@@ -148,22 +138,20 @@ public partial class LibreriaDbContext : DbContext
 
             entity.HasOne(d => d.IdAutorNavigation).WithMany(p => p.Libros)
                 .HasForeignKey(d => d.IdAutor)
-                .HasConstraintName("FK__libros__id_autor__45F365D3");
+                .HasConstraintName("FK__libros__id_autor__3D5E1FD2");
 
             entity.HasOne(d => d.IdCategoriaNavigation).WithMany(p => p.Libros)
                 .HasForeignKey(d => d.IdCategoria)
-                .HasConstraintName("FK__libros__id_categ__47DBAE45");
+                .HasConstraintName("FK__libros__id_categ__3E52440B");
         });
 
         modelBuilder.Entity<PedidoDetalle>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__pedido_d__3213E83F4FDC6462");
+            entity.HasKey(e => e.Id).HasName("PK__pedido_d__3213E83F60F8FB72");
 
             entity.ToTable("pedido_detalle");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.CreatedAt)
                 .HasColumnType("datetime")
                 .HasColumnName("created_at");
@@ -181,14 +169,17 @@ public partial class LibreriaDbContext : DbContext
 
         modelBuilder.Entity<PedidoEncabezado>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__pedido_e__3213E83FCA0A7C22");
+            entity.HasKey(e => e.Id).HasName("PK__pedido_e__3213E83FDD2DEC46");
 
             entity.ToTable("pedido_encabezado");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.CantidadLibros).HasColumnName("cantidad_libros");
+            entity.Property(e => e.Estado)
+                .HasMaxLength(1)
+                .IsUnicode(false)
+                .IsFixedLength()
+                .HasColumnName("estado");
             entity.Property(e => e.IdCliente).HasColumnName("id_cliente");
             entity.Property(e => e.Total)
                 .HasColumnType("decimal(18, 2)")
@@ -196,7 +187,7 @@ public partial class LibreriaDbContext : DbContext
 
             entity.HasOne(d => d.IdClienteNavigation).WithMany(p => p.PedidoEncabezados)
                 .HasForeignKey(d => d.IdCliente)
-                .HasConstraintName("FK__pedido_en__id_cl__4316F928");
+                .HasConstraintName("FK__pedido_en__id_cl__412EB0B6");
         });
 
         OnModelCreatingPartial(modelBuilder);

@@ -13,6 +13,8 @@ public partial class PedidoEncabezado
 
     public decimal? Total { get; set; }
 
+    public string? Estado { get; set; }
+
     public virtual Cliente? IdClienteNavigation { get; set; }
 
     public virtual ICollection<PedidoDetalle> PedidoDetalles { get; set; } = new List<PedidoDetalle>();

@@ -60,13 +60,42 @@ namespace L02P02_2021RV650.Controllers
         {
             if (ModelState.IsValid)
             {
+                comentariosLibro.CreatedAt = DateTime.Now;
                 _context.Add(comentariosLibro);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Comentariofinal));
             }
+
+           
+            var libro = await _context.Libros.FindAsync(comentariosLibro.IdLibro);
+            if (libro == null)
+            {
+                return NotFound(); 
+            }
+
+            var autor = await _context.Autores.FindAsync(libro.IdAutor);
+            if (autor == null)
+            {
+                return NotFound(); 
+            }
+
+          
+            ViewBag.NombreAutor = autor.Autor;
+            ViewBag.NombreLibro = libro.Nombre;
+
+           
             ViewData["IdLibro"] = new SelectList(_context.Libros, "Id", "Id", comentariosLibro.IdLibro);
             return View(comentariosLibro);
         }
+
+
+        public async Task<IActionResult> Comentariofinal()
+        {
+            var libreriaDbContext = _context.ComentariosLibros.Include(c => c.IdLibroNavigation);
+            return View(await libreriaDbContext.ToListAsync());
+        }
+
+
 
         // GET: ComentariosLibroes/Edit/5
         public async Task<IActionResult> Edit(int? id)

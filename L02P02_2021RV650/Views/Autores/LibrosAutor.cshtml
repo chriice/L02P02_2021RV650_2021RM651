@@ -1,0 +1,43 @@
+﻿@model List<Libro>
+
+<div class="container">
+    <ul class="progressbar">
+        <li>Autores</li>
+        <li class="active">Libros</li>
+        <li>Comentarios existentes</li>
+        <li>Nuevo comentario</li>
+    </ul>
+    <br />
+</div>
+<div class="container my-1">
+    <div class="row my-1  border border-gray rounded">
+        <div class="col-5">
+            <h2 class="text-primary">Autor</h2>
+        </div>
+        <div class="col-7">
+            <h2>@ViewBag.NombreAutor</h2>
+        </div>
+    </div>
+
+
+    <table class="table table-bordered border-gray">
+        <thead class="bg-light">
+            <tr>
+                <th>Nombre</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var libro in Model)
+            {
+                <tr>
+                    <td>@libro.Nombre</td>
+                    <td class="text-center">
+                        <a asp-action="ComentariosLibro" asp-route-id="@libro.Id" asp-route-nombre="@libro.Nombre" class="btn btn-success">Seleccionar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>

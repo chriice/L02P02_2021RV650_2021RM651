@@ -8,7 +8,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<LibreriaDbContext>(options =>
         options.UseSqlServer(
-            builder.Configuration.GetConnectionString("ConnectionStrings")
+            builder.Configuration.GetConnectionString("BlogDbConnection")
             )
         );
 
